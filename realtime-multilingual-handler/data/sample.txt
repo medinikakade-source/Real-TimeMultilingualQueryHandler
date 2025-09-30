@@ -1,0 +1,4 @@
+Realtime Multilingual Query Handler project.
+This document contains example content about building a multilingual query handler.
+We will test text splitting, embeddings, and retrieval locally.
+You can add more documents (pdfs, markdown, faq) later.
