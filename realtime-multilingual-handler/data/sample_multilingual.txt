@@ -1,0 +1,11 @@
+# English
+This project is about building a Real-Time Multilingual Query Handler. It uses FastAPI, vector databases, and embeddings to let users query knowledge in any language.
+
+# Spanish
+Este proyecto trata de construir un Manejador de Consultas Multilingüe en Tiempo Real. Utiliza FastAPI, bases de datos vectoriales y embeddings para permitir a los usuarios consultar el conocimiento en cualquier idioma.
+
+# Hindi
+यह परियोजना एक वास्तविक समय बहुभाषी क्वेरी हैंडलर बनाने के बारे में है। यह FastAPI, वेक्टर डेटाबेस और एम्बेडिंग्स का उपयोग करता है ताकि उपयोगकर्ता किसी भी भाषा में ज्ञान को क्वेरी कर सकें।
+
+# French
+Ce projet consiste à créer un Gestionnaire de Requêtes Multilingues en Temps Réel. Il utilise FastAPI, des bases de données vectorielles et des embeddings pour permettre aux utilisateurs d’interroger la connaissance dans n’importe quelle langue.
