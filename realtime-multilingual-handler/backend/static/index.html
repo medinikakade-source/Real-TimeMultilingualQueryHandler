@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Realtime Multilingual Query Handler — Demo</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --accent:#6ee7b7; --muted:#94a3b8; --text:#e6eef8;
+    }
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial; background:linear-gradient(180deg,#071029 0%, #07172a 100%); color:var(--text); margin:0; padding:24px;}
+    .container{max-width:920px;margin:0 auto;}
+    header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+    h1{font-size:20px;margin:0}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px;padding:18px; box-shadow: 0 6px 18px rgba(2,6,23,0.6); border:1px solid rgba(255,255,255,0.03)}
+    textarea{width:100%;min-height:92px;border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);resize:vertical}
+    button{background:var(--accent); color:#042024; padding:10px 14px;border-radius:8px;border:none;font-weight:600;cursor:pointer}
+    .meta{color:var(--muted); font-size:13px}
+    .row{display:flex;gap:12px;align-items:center}
+    .results{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .panel{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02); min-height:120px}
+    .source{font-size:13px;color:var(--muted);margin-top:8px;border-top:1px dashed rgba(255,255,255,0.03);padding-top:8px}
+    .small{font-size:13px;color:var(--muted)}
+    .loader{display:inline-block;width:18px;height:18px;border-radius:50%;border:3px solid rgba(255,255,255,0.08);border-top-color:var(--accent);animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    pre{white-space:pre-wrap;font-family:inherit}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Realtime Multilingual Query Handler — Demo</h1>
+      <div class="meta">Ask in any language — results show English + localized answer</div>
+    </header>
+
+    <div class="card">
+      <label class="small">Your query</label>
+      <textarea id="query" placeholder="Type a question in any language (e.g., ¿De qué trata el proyecto?)">¿De qué trata el proyecto?</textarea>
+
+      <div style="display:flex;gap:8px;margin-top:10px;align-items:center">
+        <button id="ask">Ask</button>
+        <div id="status" class="small" style="margin-left:6px"></div>
+      </div>
+
+      <div class="results" style="margin-top:16px">
+        <div class="panel" id="left">
+          <h3 style="margin:0;font-size:15px">Query & Translation</h3>
+          <div class="small" style="margin-top:8px">Detected language: <strong id="lang">—</strong></div>
+          <div style="margin-top:6px"><label class="small">English translation</label><pre id="query_en">—</pre></div>
+        </div>
+
+        <div class="panel" id="right">
+          <h3 style="margin:0;font-size:15px">Answers</h3>
+          <div style="margin-top:8px"><label class="small">English answer</label><pre id="answer_en">—</pre></div>
+          <div style="margin-top:8px"><label class="small">Localized answer</label><pre id="answer_local">—</pre></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h3 style="margin:0;font-size:15px">Sources (retrieved)</h3>
+        <div id="sources" style="margin-top:8px"></div>
+      </div>
+
+      <div style="margin-top:10px" class="small">Tip: If responses look odd, the demo uses a stub LLM. For production, swap the stub for a real LLM provider.</div>
+    </div>
+  </div>
+
+<script>
+const askBtn = document.getElementById('ask');
+const queryEl = document.getElementById('query');
+const statusEl = document.getElementById('status');
+const langEl = document.getElementById('lang');
+const queryEnEl = document.getElementById('query_en');
+const answerEnEl = document.getElementById('answer_en');
+const answerLocalEl = document.getElementById('answer_local');
+const sourcesEl = document.getElementById('sources');
+
+async function postQuery(q) {
+  const payload = { query: q, k: 3 };
+  statusEl.innerHTML = '<span class="loader"></span> Working...';
+  try {
+    const res = await fetch('/api/answer_translate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error('Server error: ' + res.status + ' - ' + text);
+    }
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    throw err;
+  } finally {
+    statusEl.innerHTML = '';
+  }
+}
+
+function renderSources(sources) {
+  sourcesEl.innerHTML = '';
+  if (!sources || sources.length === 0) {
+    sourcesEl.innerHTML = '<div class="small">No sources returned.</div>';
+    return;
+  }
+  sources.forEach((s, idx) => {
+    const div = document.createElement('div');
+    div.className = 'source';
+    div.innerHTML = `<div style="font-weight:600">${idx+1}. ${s.source}</div>
+                     <div class="small">score: ${Number(s.score).toFixed(4)}</div>
+                     <pre style="margin-top:6px">${escapeHtml(s.chunk)}</pre>`;
+    sourcesEl.appendChild(div);
+  });
+}
+function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]) }
+
+askBtn.addEventListener('click', async () => {
+  const q = queryEl.value.trim();
+  if (!q) return alert('Type a query first');
+  try {
+    const data = await postQuery(q);
+    langEl.textContent = data.detected_language || '—';
+    queryEnEl.textContent = data.query_en || '—';
+    answerEnEl.textContent = data.answer_en || '—';
+    answerLocalEl.textContent = data.answer_local || '—';
+    renderSources(data.sources || []);
+  } catch (err) {
+    statusEl.textContent = 'Error: ' + err.message;
+  }
+});
+
+// initial run
+window.addEventListener('load', ()=> askBtn.click());
+</script>
+</body>
+</html>

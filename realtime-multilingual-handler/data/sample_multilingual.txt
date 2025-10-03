@@ -1,0 +1,41 @@
+# English
+This project is about building a Real-Time Multilingual Query Handler. 
+It uses FastAPI, vector databases, and embeddings to let users query knowledge in any language. 
+The main benefits are inclusivity, accessibility, and faster information retrieval across regions. 
+Embeddings transform text into vectors, allowing semantic search even across different languages.
+
+# Spanish
+Este proyecto trata de construir un Manejador de Consultas Multilingüe en Tiempo Real. 
+Utiliza FastAPI, bases de datos vectoriales y embeddings para permitir a los usuarios consultar el conocimiento en cualquier idioma. 
+Los principales beneficios son la inclusión, la accesibilidad y una recuperación de información más rápida en distintas regiones. 
+Los embeddings transforman el texto en vectores, lo que permite una búsqueda semántica incluso entre diferentes idiomas.
+
+# French
+Ce projet consiste à créer un gestionnaire de requêtes multilingues en temps réel. 
+Il utilise FastAPI, des bases de données vectorielles et des embeddings pour permettre aux utilisateurs d’interroger des connaissances dans n’importe quelle langue. 
+Les principaux avantages sont l’inclusivité, l’accessibilité et une récupération plus rapide des informations à travers les régions. 
+Les embeddings transforment le texte en vecteurs, permettant une recherche sémantique même entre différentes langues.
+
+# Hindi
+यह परियोजना एक वास्तविक समय बहुभाषी क्वेरी हैंडलर बनाने के बारे में है। 
+यह FastAPI, वेक्टर डेटाबेस और एम्बेडिंग्स का उपयोग करता है ताकि उपयोगकर्ता किसी भी भाषा में ज्ञान की क्वेरी कर सकें। 
+मुख्य लाभ हैं समावेशिता, पहुंच और विभिन्न क्षेत्रों में तेज़ जानकारी पुनः प्राप्त करना। 
+एम्बेडिंग्स पाठ को वेक्टर में बदलते हैं, जिससे विभिन्न भाषाओं में भी सैमांटिक खोज संभव हो जाती है।
+
+# German
+Dieses Projekt befasst sich mit dem Aufbau eines Echtzeit-Mehrsprachigen Anfrage-Handlers. 
+Es verwendet FastAPI, Vektordatenbanken und Embeddings, damit Benutzer Wissen in jeder Sprache abfragen können. 
+Die Hauptvorteile sind Inklusivität, Barrierefreiheit und eine schnellere Informationsabfrage über verschiedene Regionen hinweg. 
+Embeddings wandeln Text in Vektoren um und ermöglichen so eine semantische Suche auch über verschiedene Sprachen hinweg.
+
+# Chinese (Simplified)
+该项目旨在构建一个实时多语言查询处理器。 
+它使用 FastAPI、向量数据库和嵌入技术，使用户能够用任何语言查询知识。 
+主要优势是包容性、可访问性以及跨地区更快的信息检索。 
+嵌入将文本转换为向量，从而实现跨语言的语义搜索。
+
+# Arabic
+يهدف هذا المشروع إلى بناء معالج استعلامات متعدد اللغات في الوقت الحقيقي. 
+يستخدم FastAPI وقواعد البيانات الشعاعية وعمليات الإدراج (Embeddings) لتمكين المستخدمين من الاستعلام عن المعرفة بأي لغة. 
+تتمثل الفوائد الرئيسية في الشمولية وإمكانية الوصول واسترجاع المعلومات بشكل أسرع عبر المناطق. 
+تقوم عمليات الإدراج بتحويل النص إلى متجهات، مما يسمح بالبحث الدلالي حتى عبر لغات مختلفة.
